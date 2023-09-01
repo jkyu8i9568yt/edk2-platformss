@@ -23,6 +23,11 @@
 #define MEMORY32SETBASE(BufName, MemName, VarName, Offset)       \
     CreateDwordField (^BufName, ^MemName._BAS, VarName)          \
     Add (BCM2836_SOC_REGISTERS, Offset, VarName)
+    
+    // Same as above, but without the base address.
+#define MEMORY32SET(BufName, MemName, VarName, Address)          \
+   CreateDwordField (^BufName, ^MemName._BAS, VarName)          \
+   Store(Address, VarName)
 
 #define EFI_ACPI_OEM_ID                       {'R','P','I','F','D','N'}
 #if (RPI_MODEL == 3)
@@ -139,6 +144,8 @@ typedef struct
 #elif (RPI_MODEL == 4)
 #define BCM2836_V3D_BUS_INTERRUPT               0x2A
 #define BCM2836_DMA_INTERRUPT                   0x3B
+#define BCM2836_DMA0_INTERRUPT                  0x70
+#define BCM2836_DMA5_INTERRUPT                  0x75
 #define BCM2836_SPI1_INTERRUPT                  0x7D
 #define BCM2836_SPI2_INTERRUPT                  0x7D
 #define BCM2836_HVS_INTERRUPT                   0x41

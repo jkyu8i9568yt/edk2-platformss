@@ -36,6 +36,198 @@ Device (USB0)
   }
 }
 
+// Video Core 5 GPU
+Device (GPU1)
+{
+  Name (_HID, "BCMV5000")
+  Name (_CID, "BCMV5000")
+  Name (_UID, 0x0)
+  Name (_CCA, 0x0)
+  Method (_STA)
+  {
+    Return (0xf)
+  }
+  
+  Device(HVS0)
+  {
+    Name (_HID, "BCMV5001")
+    Name (_CID, "BCMV5001")
+    Name (_UID, 0x0)
+    Name (_CCA, 0x0)
+    Method (_STA)
+    {
+      Return (0xf)
+    }
+
+    Method (_CRS, 0x0, Serialized)
+    {
+      Name (RBUF, ResourceTemplate ()
+      {
+        MEMORY32FIXED (ReadWrite, 0xfe400000, 0x6000, )
+        Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive) { 129 }
+      })
+      Return (RBUF)
+    }
+  }
+
+  Device(HDM0)
+  {
+    Name (_HID, "BCMV5020")
+    Name (_CID, "BCMV5020")
+    Name (_UID, 0x0)
+    Name (_CCA, 0x0)
+    Method (_STA)
+    {
+      Return (0xf)
+    }
+
+    Method (_CRS, 0x0, Serialized)
+    {
+      Name (RBUF, ResourceTemplate ()
+      {
+        MEMORY32FIXED (ReadWrite, 0xfef00700, 0x300, )
+        Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive) { 136 }
+      })
+      Return (RBUF)
+    }
+  }
+
+  Device(HDM1)
+  {
+    Name (_HID, "BCMV5021")
+    Name (_CID, "BCMV5021")
+    Name (_UID, 0x1)
+    Name (_CCA, 0x0)
+    Method (_STA)
+    {
+      Return (0xf)
+    }
+
+    Method (_CRS, 0x0, Serialized)
+    {
+      Name (RBUF, ResourceTemplate ()
+      {
+        MEMORY32FIXED (ReadWrite, 0xfef05700, 0x300, )
+        Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive) { 137 }
+      })
+      Return (RBUF)
+    }
+  }
+
+  Device(TXP0)
+  {
+    Name (_HID, "BCMV5003")
+    Name (_CID, "BCMV5003")
+    Name (_UID, 0x0)
+    Name (_CCA, 0x0)
+    Method (_STA)
+    {
+      Return (0xf)
+    }
+
+    Method (_CRS, 0x0, Serialized)
+    {
+      Name (RBUF, ResourceTemplate ()
+      {
+        MEMORY32FIXED (ReadWrite, 0xfe004000, 0x20, )
+        Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive) { 107 }
+      })
+      Return (RBUF)
+    }
+  }
+
+  Device(PVA0)
+  {
+    Name (_HID, "BCMV5040")
+    Name (_CID, "BCMV5040")
+    Name (_UID, 0x0)
+    Name (_CCA, 0x0)
+    Method (_STA)
+    {
+      Return (0xf)
+    }
+
+    Method (_CRS, 0x0, Serialized)
+    {
+      Name (RBUF, ResourceTemplate ()
+      {
+        MEMORY32FIXED (ReadWrite, 0xfe206000, 0x100, )
+        Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive) { 141 }
+      })
+      Return (RBUF)
+    }
+  }
+
+
+  Device(PVA1)
+  {
+    Name (_HID, "BCMV5041")
+    Name (_CID, "BCMV5041")
+    Name (_UID, 0x1)
+    Name (_CCA, 0x0)
+    Method (_STA)
+    {
+      Return (0xf)
+    }
+
+    Method (_CRS, 0x0, Serialized)
+    {
+      Name (RBUF, ResourceTemplate ()
+      {
+        MEMORY32FIXED (ReadWrite, 0xfe207000, 0x100, )
+        Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive) { 142 }
+      })
+      Return (RBUF)
+    }
+  }
+
+
+  Device(PVA2)
+  {
+    Name (_HID, "BCMV5042")
+    Name (_CID, "BCMV5042")
+    Name (_UID, 0x2)
+    Name (_CCA, 0x0)
+    Method (_STA)
+    {
+      Return (0xf)
+    }
+
+    Method (_CRS, 0x0, Serialized)
+    {
+      Name (RBUF, ResourceTemplate ()
+      {
+        MEMORY32FIXED (ReadWrite, 0xfe20a000, 0x100, )
+        Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive) { 133 }
+      })
+      Return (RBUF)
+    }
+  }
+
+  Device(PVA3)
+  {
+    Name (_HID, "BCMV5043")
+    Name (_CID, "BCMV5043")
+    Name (_UID, 0x3)
+    Name (_CCA, 0x0)
+    Method (_STA)
+    {
+      Return (0xf)
+    }
+
+    Method (_CRS, 0x0, Serialized)
+    {
+      Name (RBUF, ResourceTemplate ()
+      {
+        MEMORY32FIXED (ReadWrite, 0xfe216000, 0x100, )
+        Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive) { 138 }
+      })
+      Return (RBUF)
+    }
+  }
+
+}
+
 // Video Core 4 GPU
 Device (GPU0)
 {
@@ -355,11 +547,12 @@ Device (SPI1)
 // }
 
 // PWM Driver
-Device (PWM0)
+
+Device (PWM1)
 {
   Name (_HID, "BCM2844")
   Name (_CID, "BCM2844")
-  Name (_UID, 0)
+  Name (_UID, 1)
   Name (_CCA, 0x0)
   Method (_STA)
   {
@@ -368,29 +561,112 @@ Device (PWM0)
   Name (RBUF, ResourceTemplate ()
   {
     // DMA channel 11 control
-    MEMORY32FIXED (ReadWrite, 0, BCM2836_PWM_DMA_LENGTH, RM01)
+    MEMORY32FIXED (ReadWrite, 0, 0x00000100, RM01)
     // PWM control
-    MEMORY32FIXED (ReadWrite, 0, BCM2836_PWM_CTRL_LENGTH, RM02)
+    MEMORY32FIXED (ReadWrite, 0, 0x00000028, RM02)
     // PWM control bus
-    MEMORY32FIXED (ReadWrite, BCM2836_PWM_BUS_BASE_ADDRESS, BCM2836_PWM_BUS_LENGTH, )
+    MEMORY32FIXED (ReadWrite, 0, 0x00000028, RM03)
     // PWM control uncached
-    MEMORY32FIXED (ReadWrite, BCM2836_PWM_CTRL_UNCACHED_BASE_ADDRESS, BCM2836_PWM_CTRL_UNCACHED_LENGTH, )
-    // PWM clock control
-    MEMORY32FIXED (ReadWrite, 0, BCM2836_PWM_CLK_LENGTH, RM03)
-    // Interrupt DMA channel 11
-    Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive) { BCM2836_DMA_INTERRUPT }
-    // DMA channel 11, DREQ 5 for PWM
-    FixedDMA (5, 11, Width32Bit, )
-  })
-
-  Method (_CRS, 0x0, Serialized)
-  {
-    MEMORY32SETBASE (RBUF, RM01, RB01, BCM2836_PWM_DMA_OFFSET)
-    MEMORY32SETBASE (RBUF, RM02, RB02, BCM2836_PWM_CTRL_OFFSET)
-    MEMORY32SETBASE (RBUF, RM03, RB03, BCM2836_PWM_CLK_OFFSET)
+    MEMORY32FIXED (ReadWrite, 0xC0000000, 1 )
+     // PWM clock control
+     MEMORY32FIXED (ReadWrite, 0, 0x00000008, RM04)
+     // Interrupt DMA channel 11
+    Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive) { 0x70 }
+     // DMA channel 11, DREQ 5 for PWM
+    FixedDMA (1, 0, Width32Bit, )
+   })
+ 
+   Method (_CRS, 0x0, Serialized)
+   {
+    MEMORY32SETBASE (RBUF, RM01, RB01, 0x00007000)
+    MEMORY32SETBASE (RBUF, RM02, RB02, 0x0020C800)
+    MEMORY32SET (RBUF, RM03, RB03, BCM2836_PWM1_CTRL_BUS_BASE_ADDRESS)
+    MEMORY32SETBASE (RBUF, RM04, RB04, 0x001010A0)
     Return (^RBUF)
   }
-}
+  }
+  
+
+
+ Device (AAUD)
+            {
+                Name (_HID, "RPI73EA")  // _HID: Hardware ID
+                Name (_DEP, Package (0x01)  // _DEP: Dependencies
+                {
+                    PWM1
+                })
+                Method (_STA, 0, NotSerialized)  // _STA: Status
+                {
+                    Return (0x0F)
+                }
+
+                Name (_DSD, Package (0x02)  // _DSD: Device-Specific Data
+                {
+                    ToUUID ("daffd814-6eba-4d8c-8a91-bc9bbf4aa301") /* Device Properties for _DSD */, 
+                    Package (0x03)
+                    {
+                        Package (0x02)
+                        {
+                            "pwm-clock-source", 
+                            "plld"
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "pwm-clock-source-frequency", 
+                            0x2CB41780
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "pwm-clock-max-frequency", 
+                            0x165A0BC0
+                        }
+                    }
+                })
+            }
+
+            Device (HDMI)
+            {
+                Name (_HID, "RPI73EB")  // _HID: Hardware ID
+                Method (_STA, 0, NotSerialized)  // _STA: Status
+                {
+                    Return (0x0F)
+                }
+
+                Name (RBUF, ResourceTemplate ()
+                {
+                    Memory32Fixed (ReadWrite,
+                        0x00000000,         // Address Base
+                        0x00000100,         // Address Length
+                        _Y28)
+                    Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x00000075,
+                    }
+                    FixedDMA (0x000A, 0x0005, Width32bit, )
+                })
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
+                {
+                    CreateDWordField (RBUF, \_SB.GDV0.HDMI._Y28._BAS, RB01)  // _BAS: Base Address
+                    RB01 = 0xFE007500
+                    Return (RBUF) /* \_SB_.GDV0.HDMI.RBUF */
+                }
+            }
+
+            Device (HAUD)
+            {
+                Name (_HID, "RPI73EC")  // _HID: Hardware ID
+                Name (_DEP, Package (0x01)  // _DEP: Dependencies
+                {
+                    HDMI
+                })
+                Method (_STA, 0, NotSerialized)  // _STA: Status
+                {
+                    Return (0x0F)
+                }
+            }
+
 
 include ("Uart.asl")
 include ("Rhpx.asl")

@@ -90,7 +90,7 @@ DefinitionBlock (__FILE__, "SSDT", 5, "RPIFDN", "RPI4XHCI", 2)
 
       Device (XHC0)
       {
-        Name (_HID, "PNP0D10")      // _HID: Hardware ID
+        Name (_HID, "RPI0D10")      // _HID: Hardware ID
         Name (_UID, 0x0)            // _UID: Unique ID
         Name (_CCA, 0x0)            // _CCA: Cache Coherency Attribute
 

@@ -139,15 +139,20 @@ DefinitionBlock ("Dsdt.aml", "DSDT", 2, "RPIFDN", "RPI", 2)
           QWORDMEMORYBUF(14)
           QWORDMEMORYBUF(15)
           // QWORDMEMORYBUF(16)
-          QWORDMEMORYBUF(17)
-          QWORDMEMORYBUF(18)
-          QWORDMEMORYBUF(19)
-          QWORDMEMORYBUF(20)
+          //QWORDMEMORYBUF(17)
+          //QWORDMEMORYBUF(18)
+          //QWORDMEMORYBUF(19)
+          //QWORDMEMORYBUF(20)
           QWORDMEMORYBUF(21)
           QWORDMEMORYBUF(22)
           QWORDMEMORYBUF(23)
           QWORDMEMORYBUF(24)
           QWORDMEMORYBUF(25)
+          QWORDMEMORYBUF(26)
+          QWORDMEMORYBUF(27)
+          QWORDMEMORYBUF(28)
+          QWORDMEMORYBUF(29)
+          QWORDMEMORYBUF(30)
         })
 
         // USB
@@ -181,19 +186,24 @@ DefinitionBlock ("Dsdt.aml", "DSDT", 2, "RPIFDN", "RPI", 2)
         // QWORDMEMORYSET(16, BCM2836_SPI2_OFFSET, BCM2836_SPI2_LENGTH)
 
         // PWM
-        QWORDMEMORYSET(17, BCM2836_PWM_DMA_OFFSET, BCM2836_PWM_DMA_LENGTH)
-        QWORDMEMORYSET(18, BCM2836_PWM_CTRL_OFFSET, BCM2836_PWM_CTRL_LENGTH)
-        QWORDBUSMEMORYSET(19, BCM2836_PWM_BUS_BASE_ADDRESS, BCM2836_PWM_BUS_LENGTH)
-        QWORDBUSMEMORYSET(20, BCM2836_PWM_CTRL_UNCACHED_BASE_ADDRESS, BCM2836_PWM_CTRL_UNCACHED_LENGTH)
-        QWORDMEMORYSET(21, BCM2836_PWM_CLK_OFFSET, BCM2836_PWM_CLK_LENGTH)
+       // QWORDMEMORYSET(17, BCM2836_PWM_DMA_OFFSET, BCM2836_PWM_DMA_LENGTH)
+       // QWORDMEMORYSET(18, BCM2836_PWM_CTRL_OFFSET, BCM2836_PWM_CTRL_LENGTH)
+        //QWORDBUSMEMORYSET(19, BCM2836_PWM_BUS_BASE_ADDRESS, BCM2836_PWM_BUS_LENGTH)
+        //QWORDBUSMEMORYSET(20, BCM2836_PWM_CTRL_UNCACHED_BASE_ADDRESS, BCM2836_PWM_CTRL_UNCACHED_LENGTH)
+        QWORDMEMORYSET(21, BCM2836_PWM_DMA_OFFSET, BCM2836_PWM_DMA_LENGTH)
+        QWORDMEMORYSET(22, BCM2836_PWM_CTRL_OFFSET, BCM2836_PWM_CTRL_LENGTH)
+        QWORDBUSMEMORYSET(23, BCM2836_PWM1_CTRL_BUS_BASE_ADDRESS, BCM2836_PWM_CTRL_LENGTH)
+        QWORDBUSMEMORYSET(24, BCM2836_DMA_DEVICE_OFFSET, 1)
+        QWORDMEMORYSET(25, BCM2836_PWM_CLK_OFFSET, BCM2836_PWM_CLK_LENGTH)
 
         // UART
-        QWORDMEMORYSET(22, BCM2836_PL011_UART_OFFSET, BCM2836_PL011_UART_LENGTH)
-        QWORDMEMORYSET(23, BCM2836_MINI_UART_OFFSET, BCM2836_MINI_UART_LENGTH)
+        QWORDMEMORYSET(26, BCM2836_PL011_UART_OFFSET, BCM2836_PL011_UART_LENGTH)
+        QWORDMEMORYSET(27, BCM2836_MINI_UART_OFFSET, BCM2836_MINI_UART_LENGTH)
 
         // SDC
-        QWORDMEMORYSET(24, MMCHS1_OFFSET, MMCHS1_LENGTH)
-        QWORDMEMORYSET(25, SDHOST_OFFSET, SDHOST_LENGTH)
+        QWORDMEMORYSET(28, MMCHS1_OFFSET, MMCHS1_LENGTH)
+        QWORDMEMORYSET(29, SDHOST_OFFSET, SDHOST_LENGTH)
+        QWORDMEMORYSET(30, PI4_PWM_AUDIO_BASE, BCM2836_PWM_DMA_LENGTH)
 
         Return (RBUF)
       }
@@ -222,6 +232,53 @@ DefinitionBlock ("Dsdt.aml", "DSDT", 2, "RPIFDN", "RPI", 2)
     }
 
 #if (RPI_MODEL == 4)
+
+	Device (TPM2)
+        {
+            Name (_ADR, Zero)  // _ADR: Address
+            Name (_HID, "FTPM0101")  // _HID: Hardware ID
+            Name (_CID, "MSFT0101" /* TPM 2.0 Security Device */)  // _CID: Compatible ID
+            Name (_UID, One)  // _UID: Unique ID
+            Name (_DDN, "Microsoft TPM 2.0")  // _DDN: DOS Device Name
+            Name (_STR, Unicode ("Microsoft TPM 2.0"))  // _STR: Description String
+            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            {
+                Name (RBUF, ResourceTemplate ()
+                {
+                })
+                Return (RBUF) /* \_SB_.TPM2._CRS.RBUF */
+            }
+
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                Return (0x0F)
+            }
+        }
+
+        //
+        // Description: Microsoft FTPM Simulator
+        //
+        Device (FSIM)
+        {
+            Name (_ADR, Zero)  // _ADR: Address
+            Name (_HID, "MPTF8888")  // _HID: Hardware ID
+            Name (_UID, One)  // _UID: Unique ID
+            Name (_DDN, "Microsoft fTPM Simulator")  // _DDN: DOS Device Name
+            Name (_STR, Unicode ("Microsoft fTPM Simulator"))  // _STR: Description String
+            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            {
+                Name (RBUF, ResourceTemplate ()
+                {
+                })
+                Return (RBUF) /* \_SB_.FSIM._CRS.RBUF */
+            }
+
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                Return (0x0F)
+            }
+        }
+        
     Device (ETH0)
     {
       Name (_HID, "BCM6E4E")
@@ -281,6 +338,47 @@ DefinitionBlock ("Dsdt.aml", "DSDT", 2, "RPIFDN", "RPI", 2)
         Name (_PSL, Package () { \_SB_.CPU0, \_SB_.CPU1, \_SB_.CPU2, \_SB_.CPU3 })
       }
     }
+	
+	    // Collaborative Processor Performace Control (CPPC)
+    // Define the system frequency and how the OSPM can alter
+    // the frequency at runtime. On the rpi the frequencies are
+    // controlled by the videocore firmware/mailbox interface
+    // but this interface isn't nativly PCC/etc so we use the ARM
+    // mailboxes (chapter 13 in the TRM) as triggers to trap
+    // to a secure state, and forward the request to the videocore
+    //
+    // funny enough, we could use this method for _PCT and simplify
+    // this even further (assuming OS's can deal with 'SystemMemory'
+    // PERF_CTRL).
+    Name(CPCX, Package()
+    {
+      21, // Number of entries
+      02, // Revision
+      //
+      // Describe processor capabilities (note Register() is 19.6.115)
+      //
+      1900,  // HighestPerformance - Turbo
+      1500,  // Nominal Performance - Maximum Sustained
+      600,   // Lowest nonlinear Performance
+      600,   // LowestPerformance
+      ResourceTemplate() {Register(SystemMemory,  0, 0,          0, 0)}, // Guaranteed Performance (optional)
+      ResourceTemplate() {Register(SystemMemory, 32, 0, 0xFF800080, 3)}, // Desired PerformanceRegister
+      ResourceTemplate() {Register(SystemMemory,  0, 0,          0, 0)}, // Minimum PerformanceRegister (optional)
+      ResourceTemplate() {Register(SystemMemory,  0, 0,          0, 0)}, // Maximum PerformanceRegister (optional)
+      ResourceTemplate() {Register(SystemMemory,  0, 0,          0, 0)}, // Perf ReductionToleranceRegister (optional)
+      ResourceTemplate() {Register(SystemMemory,  0, 0,          0, 0)}, // Time window  register (optional)
+      ResourceTemplate() {Register(SystemMemory,  0, 0,          0, 0)}, // Counter wrap around time (optional)
+      ResourceTemplate() {Register(PCC,          32, 0,        0x0, 0)}, // Reference counter register (PPERF)
+      ResourceTemplate() {Register(PCC,          32, 0,        0x4, 0)}, // Delivered counter register (APERF)
+      ResourceTemplate() {Register(SystemMemory, 32, 0, 0xFF800080, 3)}, // Performance limited register
+      ResourceTemplate() {Register(SystemMemory,  0, 0,          0, 0)}, // Enable register (optional)
+      0, // Autonomous  selection enable register (optional)
+      ResourceTemplate() {Register(SystemMemory,  0, 0, 0, 0)}, // Autonomous activity window register (optional)
+      ResourceTemplate() {Register(SystemMemory,  0, 0, 0, 0)}, // Autonomous energy performance preference register (optional)
+      0,    // Reference performance
+      600,  // lowest frequency
+      1900, // nominal frequency
+    })
 #endif
 
   }

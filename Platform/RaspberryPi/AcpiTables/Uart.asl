@@ -18,7 +18,7 @@
 // PL011 based UART.
 Device (URT0)
 {
-  Name (_HID, "BCM2837")
+  Name (_HID, "BCM2887")
   Name (_CID, "ARMH0011")
   Name (_UID, 0x4)
   Name (_CCA, 0x0)
