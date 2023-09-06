@@ -586,7 +586,15 @@ Device (PWM1)
   }
   }
   
+Device (SSDE)  // signing policy helper
+        {
+            Name (_HID, "SSDE")
+        }
 
+Device (SCP4) // second screen pi 4 helper
+        {
+            Name (_HID, "SCP4")
+        }
 
  Device (AAUD)
             {
