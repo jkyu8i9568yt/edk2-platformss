@@ -18,6 +18,12 @@
 #define BCM2836_SOC_REGISTER_LENGTH                         0x02000000
 
 /*
++ * VC memory view
++ */
+#define BCM2836_SOC_BUS_REGISTERS                           0x7E000000
+
+
+/*
  * Offset between the CPU's view and the VC's view of system memory.
  */
 #define BCM2836_DMA_DEVICE_OFFSET                           0xc0000000
@@ -112,6 +118,12 @@
 /* dma constants */
 #define BCM2836_DMA0_OFFSET                                 0x00007000
 #define BCM2836_DMA0_BASE_ADDRESS                           (BCM2836_SOC_REGISTERS + BCM2836_DMA0_OFFSET)
+
+#define BCM2836_DMA1_OFFSET                                 0x00007100
+#define BCM2836_DMA1_BASE_ADDRESS                           (BCM2836_SOC_REGISTERS + BCM2836_DMA1_OFFSET)
+
+#define BCM2836_DMA5_OFFSET                                 0x00007500
+#define BCM2836_DMA5_BASE_ADDRESS                           (BCM2836_SOC_REGISTERS + BCM2836_DMA5_OFFSET)
 
 #define BCM2836_DMA15_OFFSET                                0x00E05000
 #define BCM2836_DMA15_BASE_ADDRESS                          (BCM2836_SOC_REGISTERS + BCM2836_DMA15_OFFSET)
