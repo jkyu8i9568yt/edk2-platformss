@@ -29,7 +29,7 @@
    CreateDwordField (^BufName, ^MemName._BAS, VarName)          \
    Store(Address, VarName)
 
-#define EFI_ACPI_OEM_ID                       {'R','P','I','F','D','N'}
+#define EFI_ACPI_OEM_ID                       {'N','X','P','M','X','6'}
 #if (RPI_MODEL == 3)
 #define EFI_ACPI_OEM_TABLE_ID                 SIGNATURE_64 ('R','P','I','3',' ',' ',' ',' ')
 #elif (RPI_MODEL == 4)

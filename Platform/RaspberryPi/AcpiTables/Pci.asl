@@ -31,7 +31,7 @@ DefinitionBlock (__FILE__, "SSDT", 5, "RPIFDN", "RPI4PCIE", 2)
       Name(_HID, EISAID("PNP0A08")) // PCI Express Root Bridge
       Name(_CID, EISAID("PNP0A03")) // Compatible PCI Root Bridge
       Name(_SEG, Zero) // PCI Segment Group number
-      Name(_BBN, Zero) // PCI Base Bus Number
+      Name(_BBN, 1) // PCI Base Bus Number
       Name(_CCA, 0)    // Mark the PCI noncoherent
 
       // PCIe can only DMA to first 3GB with early SOC's
@@ -78,10 +78,10 @@ DefinitionBlock (__FILE__, "SSDT", 5, "RPIFDN", "RPI4PCIE", 2)
             ResourceProducer,
             MinFixed, MaxFixed, PosDecode,
             0,   // AddressGranularity
-            0,   // AddressMinimum - Minimum Bus Number
-            255, // AddressMaximum - Maximum Bus Number
+            1,   // AddressMinimum - Minimum Bus Number
+            1, // AddressMaximum - Maximum Bus Number
             0,   // AddressTranslation - Set to 0
-            256  // RangeLength - Number of Busses
+            1  // RangeLength - Number of Busses
           )
 
           // 32-bit mmio window in 64-bit addr
@@ -95,19 +95,6 @@ DefinitionBlock (__FILE__, "SSDT", 5, "RPIFDN", "RPI4PCIE", 2)
             SANITIZED_PCIE_CPU_MMIO_WINDOW, // SANITIZED_PCIE_PCI_MMIO_BEGIN - SANITIZED_PCIE_CPU_MMIO_WINDOW
             2                               // SANITIZED_PCIE_MMIO_LEN + 1
             ,,,MMI1
-          )
-
-          // root port registers, not to be used if SMCCC is utilized
-          QWordMemory (
-            ResourceConsumer, ,
-            MinFixed, MaxFixed,
-            NonCacheable, ReadWrite,        // cacheable
-            0x00000000,                     // Granularity
-            0xFD500000,                     // Root port begin
-            0xFD509FFF,                     // Root port end
-            0x00000000,                     // no translation
-            0x0000A000,                     // size
-            ,,
           )
         }) // end Name(RBUF)
 

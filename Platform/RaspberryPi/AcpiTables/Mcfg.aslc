@@ -1,0 +1,49 @@
+/** @file
+ *
+ *  PCI Express Memory-mapped Configuration Space base address description table (MCFG)
+ *
+ *  Copyright (c) 2021, Jared McNeill <jmcneill@invisible.ca>
+ *  Copyright (c) 2023, Mario Bălănică <mariobalanica02@gmail.com>
+ *
+ *  SPDX-License-Identifier: BSD-2-Clause-Patent
+ *
+ **/
+
+#include <IndustryStandard/Acpi.h>
+#include <IndustryStandard/MemoryMappedConfigurationSpaceAccessTable.h>
+#include "AcpiTables.h"
+
+#pragma pack(push, 1)
+
+//
+// The root port config is not part of ECAM.
+// OSes can parse additional config spaces in MCFG, but we'll hide it for now.
+//
+
+typedef struct {
+  EFI_ACPI_MEMORY_MAPPED_CONFIGURATION_BASE_ADDRESS_TABLE_HEADER Header;
+  EFI_ACPI_MEMORY_MAPPED_ENHANCED_CONFIGURATION_SPACE_BASE_ADDRESS_ALLOCATION_STRUCTURE Entry[1];
+} EFI_ACPI_MEMORY_MAPPED_CONFIGURATION_SPACE_ACCESS_DESCRIPTION_TABLE;
+
+EFI_ACPI_MEMORY_MAPPED_CONFIGURATION_SPACE_ACCESS_DESCRIPTION_TABLE Mcfg = {
+  {
+    ACPI_HEADER (
+      EFI_ACPI_6_4_PCI_EXPRESS_MEMORY_MAPPED_CONFIGURATION_SPACE_BASE_ADDRESS_DESCRIPTION_TABLE_SIGNATURE,
+      EFI_ACPI_MEMORY_MAPPED_CONFIGURATION_SPACE_ACCESS_DESCRIPTION_TABLE,
+      EFI_ACPI_MEMORY_MAPPED_CONFIGURATION_SPACE_ACCESS_TABLE_REVISION
+      ),
+  },
+  {
+    {
+      PCIE_REG_BASE + PCIE_EXT_CFG_DATA,
+      0,  // PciSegmentNumber
+      1,  // PciBusMin
+      1,  // PciBusMax
+      0   // Reserved
+    }
+  }
+};
+
+#pragma pack(pop)
+
+VOID* CONST ReferenceAcpiTable = &Mcfg;

@@ -31,7 +31,8 @@
   Dbg2MiniUart.aslc
   Dbg2Pl011.aslc
   Gtdt.aslc
-  Iort.aslc
+  # Iort.aslc
+  Mcfg.aslc
   Dsdt.asl
   Csrt.aslc
   SpcrMiniUart.aslc
@@ -40,6 +41,7 @@
   SsdtThermal.asl
   Xhci.asl
   Pci.asl
+  tpm2.aslc
 
 [Packages]
   ArmPkg/ArmPkg.dec
