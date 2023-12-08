@@ -41,7 +41,7 @@
   SsdtThermal.asl
   Xhci.asl
   Pci.asl
-  tpm2.aslc
+  # tpm2.aslc
 
 [Packages]
   ArmPkg/ArmPkg.dec
