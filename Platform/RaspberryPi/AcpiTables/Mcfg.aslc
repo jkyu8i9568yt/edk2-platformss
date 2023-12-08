@@ -12,6 +12,7 @@
 #include <IndustryStandard/Acpi.h>
 #include <IndustryStandard/MemoryMappedConfigurationSpaceAccessTable.h>
 #include "AcpiTables.h"
+#include <IndustryStandard/Bcm2711.h>
 
 #pragma pack(push, 1)
 
